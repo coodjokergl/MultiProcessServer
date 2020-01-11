@@ -1,0 +1,791 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Joker.MultiProc.PipelineServer</name>
+    </assembly>
+    <members>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.CmdParam">
+            <summary>
+            命令参数
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.CmdId">
+            <summary>
+            命令主键
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.TargetTypeName">
+            <summary>
+            目标类型
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.ServiceName">
+            <summary>
+            目标服务名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.Args">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.ErrorException">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.CmdParam.Result">
+            <summary>
+            对象
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient">
+            <summary>
+            客户端管道
+            </summary>
+        </member>
+        <member name="F:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.ClientConnectTimeout">
+            <summary>
+            链接超时时间
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.CreatePipeStream">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.TaskRun">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.NextPipeServerAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.Call(Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription,System.Int32,System.Object[])">
+            <summary>
+            回调
+            </summary>
+            <param name="cmd"></param>
+            <param name="timeOut">超时时间</param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineClient.Run">
+            <inheritdoc />
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException">
+            <summary>
+            当子进程服务回调发送错误时抛出
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException.#ctor">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException"/>对象。
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException.#ctor(System.String)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException"/>对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException.#ctor(System.String,System.Exception)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException"/>对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+            <param name="inner">获取导致当前异常的 <see cref="T:System.Exception"/>实例。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException.#ctor(Joker.MultiProc.PipelineServer.Pipeline.CmdParam,System.Exception)">
+            <summary>
+            初始化 <see cref="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException"/> 对象。
+            </summary>
+            <param name="cmd">进程命令对象。</param>
+            <param name="exception">内部错误</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            初始化 <see cref="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerInvokerException"/> 对象。
+            </summary>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo" />，它存有有关所引发异常的序列化的对象数据。</param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext" />，它包含有关源或目标的上下文信息。</param>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool">
+            <summary>
+            管道服务的进程池
+            </summary>
+        </member>
+        <member name="F:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.ServerPool">
+            <summary>
+            用于存储和管理管道的进程池
+            </summary>
+        </member>
+        <member name="F:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.MaxNumberServer">
+            <summary>
+            最大的服务数量
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.CreatePipeLine(System.String)">
+            <summary>
+            创建一个新的管道
+            </summary>
+            <param name="serverName">服务名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.DisposablePipeLine(System.Guid)">
+            <summary>
+            根据ID从管道池中释放一个管道
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.CreateServerPipeLineAsync(System.String)">
+            <summary>
+            (异步)创建一个新的管道进程
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServerPool.DisposablePipeLineAsync(System.Guid)">
+            <summary>
+            (异步)根据ID从管道池中释放一个管道
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer">
+            <summary>
+            服务管道
+            </summary>
+        </member>
+        <member name="F:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer.MaxNumberServerInstance">
+            <summary>
+            管线最大并发线程数
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer.CreatePipeStream">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer.NextPipeServerAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer.TaskRun">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineServer.Listen">
+            <summary>
+            监听
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializer">
+            <summary>
+            Json格式序列化
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializer.SerializeObject(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializer.DeserializeObject(System.String,System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializerResolver">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializerResolver.Serializer">
+            <summary>
+            序列化
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.JsonStreamSerializerResolver.Register(Joker.MultiProc.PipelineServer.Pipeline.Stream.IStreamSerializer)">
+            <summary>
+            注入自定义的序列化工具
+            </summary>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.Stream.ReaderStream">
+            <summary>
+            入参数据流
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.ReaderStream.#ctor(System.IO.Stream)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="ioStream"></param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.ReaderStream.ReadValue">
+            <summary>
+            读取流数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.ReaderStream.ReadInfo``1">
+            <summary>
+            读取信息
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.ReaderStream.ReadInfo">
+            <summary>
+            读取信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.Stream.IStreamSerializer">
+            <summary>
+            数据流序列化
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.IStreamSerializer.SerializeObject(System.Object)">
+            <summary>
+            序列化对象
+            </summary>
+            <param name="obj">对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.IStreamSerializer.DeserializeObject(System.String,System.Type)">
+            <summary>
+            反序列化对象
+            </summary>
+            <param name="obj">对象数据</param>
+            <param name="type">类型</param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.Stream.WriterStream">
+            <summary>
+            入参数据流
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.WriterStream.#ctor(System.IO.Stream)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="ioStream"></param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.Stream.WriterStream.Write(System.Object)">
+            <summary>
+            写数据
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase">
+            <summary>
+            管道服务基类
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.Id">
+            <summary>
+            管道ID。唯一标识一个管道服务，没什么具体含义，调试用的
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.ServerName">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.PipeStreamInstance">
+            <summary>
+            管道数据流
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.CreatePipeStream">
+            <summary>
+            开启数据流
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.NextPipeServerAsync">
+            <summary>
+            下一次服务实例。
+            当管道被关闭后，自动启动一个新的带连接资源
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.IsReady">
+            <summary>
+            是否就绪
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.Start(System.String)">
+            <summary>
+            启动服务
+            </summary>
+            <param name="serverName">服务名称</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.StartAsync(System.String)">
+            <summary>
+            启动服务
+            </summary>
+            <param name="serverName">服务名称</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.Post(Joker.MultiProc.PipelineServer.Pipeline.CmdParam)">
+            <summary>
+            发送数据。阻塞方式
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.Pipeline.PipelineBase.Read">
+            <summary>
+            读取数据。阻塞
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessEnvironment">
+            <summary>
+            进程环境变量
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.IsServer">
+            <summary>
+            是否服务端
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.IsDebug">
+            <summary>
+            是否调试
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.Servers">
+            <summary>
+            已启动的服务
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.ServiceCount">
+            <summary>
+            统一配置服务进程数量
+            </summary>
+        </member>
+        <member name="F:Joker.MultiProc.PipelineServer.ProcessEnvironment.AsyncLockObj">
+            <summary>
+            线程互斥对象
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessEnvironment.TriggerActive(System.Boolean)">
+            <summary>
+            是否激活
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessEnvironment.TryExist">
+            <summary>
+            尝试退出
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.ActiveCount">
+            <summary>
+            激活数量
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessEnvironment.LastActiveTime">
+            <summary>
+            激活时间
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException">
+            <summary>
+            当一个应用了PipelineMethod特性的方法不为虚方法的时候抛出该错误。
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException.#ctor">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException"/>对象。
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException.#ctor(System.String)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException"/>对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException.#ctor(System.String,System.Exception)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException"/>对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+            <param name="inner">获取导致当前异常的 <see cref="T:System.Exception"/>实例。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException.#ctor(System.Type,System.Reflection.MemberInfo)">
+            <summary>
+            初始化 <see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException"/> 对象。
+            </summary>
+            <param name="type">方法所在的类型。</param>
+            <param name="method">方法元数据。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            初始化 <see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodNotVirtualException"/> 对象。
+            </summary>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo" />，它存有有关所引发异常的序列化的对象数据。</param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext" />，它包含有关源或目标的上下文信息。</param>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException">
+            <summary>
+            服务方法签名错误。
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException.#ctor(System.String)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException"/> 对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException.#ctor(System.String,System.Exception)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException"/> 对象。
+            </summary>
+            <param name="message">描述错误的消息。</param>
+            <param name="innerException">获取导致当前异常的 <see cref="T:System.Exception"/>实例。</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            初始化<see cref="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineMethodSignatureException"/> 对象。
+            </summary>
+            <param name="info"><see cref="T:System.Runtime.Serialization.SerializationInfo" />，它存有有关所引发异常的序列化的对象数据。</param>
+            <param name="context"><see cref="T:System.Runtime.Serialization.StreamingContext" />，它包含有关源或目标的上下文信息。</param>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ProcessPluginServerAttribute">
+            <summary>
+            管线服务
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ProcessService`1">
+            <summary>
+            表示需要延迟创建的对象包装类。
+            </summary>
+            <typeparam name="T">需要延迟创建的对象类型。</typeparam>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.ProcessService`1.Instance">
+            <summary>
+            获取延迟创建的对象引用。
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ServiceInvoker">
+            <summary>
+            服务执行
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ServiceInvoker.Execute(Joker.MultiProc.PipelineServer.Pipeline.CmdParam)">
+            <inheritdoc />
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription">
+            <summary>
+            服务方法描述接口
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription.Call(System.Object[])">
+            <summary>
+            方法调用
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription.ServiceName">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription.ServiceCount">
+            <summary>
+            服务数量
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription.TypeName">
+            <summary>
+            类型名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.IMethodDescription.MethodName">
+            <summary>
+            方法名称
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.IProcessService">
+            <summary>
+            进程服务接口
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.IProcessInvoker">
+            <summary>
+            服务方法
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.IProcessInvoker.Execute(Joker.MultiProc.PipelineServer.Pipeline.CmdParam)">
+            <summary>
+            执行
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription">
+            <summary>
+            服务方法描述类
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.#ctor(System.Reflection.MethodInfo,Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="methodInfo"></param>
+            <param name="processAttribute"></param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.CreateServiceObject">
+            <summary>
+            创建服务对象
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.Call(System.Object[])">
+            <summary>
+            服务方法回调
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.ServiceName">
+            <inheritdoc />
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.ServiceCount">
+            <inheritdoc />
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.TypeName">
+            <inheritdoc />
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.MethodName">
+            <inheritdoc />
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.NeedConvert(System.Type,System.Type)">
+            <summary>
+            是否需要类型转换
+            </summary>
+            <param name="sourceType"></param>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.FastConvertType(System.Type,System.Object)">
+            <summary>
+            快速类型转换
+            </summary>
+            <param name="targetType"></param>
+            <param name="sourceObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.LocalMethodDescription.ConvertToTargetType(System.Object,System.Type)">
+            <summary>
+            对象转换为目标类型
+            </summary>
+            <param name="obj"></param>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.PipelineServiceProxyHook">
+            <summary>
+            管道服务代理挂钩
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.RegisterProcessService">
+            <summary>
+            远程调用注册服务
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.RegisterProcessService.Register">
+            <summary>
+            注册服务
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.RegisterProcessService.GetAssemblies">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute">
+            <summary>
+            多进程服务标签
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute.ServiceName">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute.ServiceType">
+            <summary>
+            服务实现类型
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute.ServiceCount">
+            <summary>
+            服务进程数量
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.MultiProcessAttribute.#ctor(System.Type,System.String,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="type">类型全称</param>
+            <param name="serviceName">服务名称</param>
+            <param name="serviceCount">进程数量</param>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceContainer">
+            <summary>
+            服务容器
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceContainer.Register``1">
+            <summary>
+            注册服务
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceContainer.Register(System.Type)">
+            <summary>
+            注册服务
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceDescription">
+            <summary>
+            远程服务描述
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceDescription.LoadMethodDescriptionDic">
+            <summary>
+            加载方法描述
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceDescription.LoadMethodDescription(System.Reflection.MethodInfo)">
+            <summary>
+            加载方法描述
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceDescription.Get(System.Reflection.MethodInfo)">
+            <summary>
+            获取方法描述
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceDescription.Get(System.String)">
+            <summary>
+            获取方法描述
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ClientInterceptor">
+            <summary>
+            拦截器
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceFactory">
+            <summary>
+            调用工厂
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceFactory.CreateClientProxy(System.Type)">
+            <summary>
+            生成客户端代理类
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.ProcessServiceFactory.CreateServiceProxy">
+            <summary>
+            生成客户端代理类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.StartUp">
+            <summary>
+            启动
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUp.RunServer(System.String)">
+            <summary>
+            加载服务
+            </summary>
+            <param name="cmdLine">命令参数</param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUp.EnableDebug(System.Boolean)">
+            <summary>
+            调试开关
+            </summary>
+            <param name="isDebug"></param>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUp.StartUpServer(System.String,System.Int32)">
+            <summary>
+            启动服务
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUp.ValidateStartUpServer(System.String)">
+            <summary>
+            启动服务
+            </summary>
+        </member>
+        <member name="T:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo">
+            <summary>
+            启动信息
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.ServerName">
+            <summary>
+            服务名称
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.Plugins">
+            <summary>
+            插件
+            </summary>
+        </member>
+        <member name="P:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.IsDebug">
+            <summary>
+            是否调试状态
+            </summary>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.Encode">
+            <summary>
+            编码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.DeEncode(System.String)">
+            <summary>
+            解码
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.StartUpInfo.ToString">
+            <summary>
+            解码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.TypeExtensions.IsPipelineMethod(System.Reflection.MethodInfo)">
+            <summary>
+            判断该方法是否为管道方法。
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.TypeExtensions.IsAllowExtendMethod(System.Reflection.MethodInfo)">
+            <summary>
+            判断该方法是否为能扩展的方法。
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.TypeExtensions.IsPipeServerAssembly(System.Reflection.Assembly)">
+            <summary>
+            是否管道服务
+            </summary>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Joker.MultiProc.PipelineServer.ProcessService.TypeExtensions.IsPipeServer(System.Type)">
+            <summary>
+            多进程服务
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
