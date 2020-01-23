@@ -24,7 +24,7 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
             using (var caller = new PipelineClient(methodDescription.ServiceName))
             {
                 //todo:超时配置暂不用，默认一直等待
-                var returnValue = caller.Call(methodDescription,-1,invocation.Arguments);
+                var returnValue = caller.Call(methodDescription, -1, invocation.Arguments);
 
                 if (returnValue != null && invocation.Method.ReturnType != typeof(void))
                 {

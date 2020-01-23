@@ -6,7 +6,7 @@ namespace Joker.MultiProc.Demo
     /// <summary>
     /// 
     /// </summary>
-    [MultiProcess(typeof(Calculator), "测试服务", 1)]
+    [MultiProcess(typeof(Calculator), "测试服务", 3)]
     public interface ICalculator : IProcessService
     {
         /// <summary>

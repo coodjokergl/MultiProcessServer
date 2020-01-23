@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +22,10 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
         /// 加载服务
         /// </summary>
         /// <param name="cmdLine">命令参数</param>
-        public static async Task<int> RunServer(string cmdLine)
+        public static async void RunServer(string cmdLine)
         {
             var info = StartUpInfo.DeEncode(cmdLine);
-
+            ProcessEnvironment.StartInfo = info;
             //子进程调试开关.放开注释可调试
             //EnableDebug(info.IsDebug);
 
@@ -40,21 +41,13 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
             try
             {
                 RegisterProcessService.Register();
+
+                //开启后台异步服务
+                await PipelineServerPool.CreateServerPipeLineAsync(info.ServerName);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                return -1;
-            }
-
-            //开启后台异步服务
-            await PipelineServerPool.CreateServerPipeLineAsync(info.ServerName);
-
-            while (true)
-            {
-                //主线程服务
-                ProcessEnvironment.TryExist();
-                Thread.Sleep(10 * 1000);
             }
         }
 
@@ -80,11 +73,12 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
         /// <summary>
         /// 启动服务
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static void StartUpServer(string name, int processCount)
         {
             lock (ProcessEnvironment.AsyncLockObj)
             {
-                if (!ValidateStartUpServer(name)) return;
+                if (!ValidateStartUpServer(name,processCount)) return;
 
                 var startInfo = new StartUpInfo();
                 startInfo.Plugins = AppDomain.CurrentDomain.GetAssemblies().Where(q => q.IsPipeServerAssembly()).Select(q => q.Location).ToList();
@@ -95,36 +89,41 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
                 var workingDirectory = Path.GetDirectoryName(exeLocation);
 
                 //获取已存在的数量
-                ProcessEnvironment.Servers.TryGetValue(name, out int existCount);
+                ProcessEnvironment.Servers.TryGetValue(name, out List<Process> existProcesses);
+                existProcesses = existProcesses ?? new List<Process>();
+
                 if (ProcessEnvironment.IsDebug)
                 {
                     processCount = 1;
                 }
 
+                //排除已经退出的进程（被用户或者其他程序杀死的进程）。排除后可以重新开启服务进程
+                existProcesses = existProcesses.Where(q => !q.HasExited).ToList();
+
                 //启动多进程
-                for (int i = existCount ; i < processCount ; i++)
+                for (int i = existProcesses.Count; i < processCount ; i++)
                 {
                     var processInfo = new ProcessStartInfo(exeLocation);
                     processInfo.WorkingDirectory = workingDirectory ?? string.Empty;
                     processInfo.UseShellExecute = false;
                     processInfo.Arguments = startInfo.Encode();
-                    processInfo.CreateNoWindow = false;
+                    processInfo.CreateNoWindow = true;
                     
                     var process = Process.Start(processInfo);
                     if (process == null)
                     {
                         throw new Exception($@"子进程启动失败!{startInfo}");
                     }
-                    
+                    existProcesses.Add(process);
                     //服务数量
-                    ProcessEnvironment.Servers[name] = i;
+                    ProcessEnvironment.Servers[name] = existProcesses;
 
                     process.Exited += new EventHandler((sender, arg) => {
                         lock (ProcessEnvironment.AsyncLockObj)
                         {
-                            if (ProcessEnvironment.Servers.TryGetValue(name, out existCount))
+                            if (ProcessEnvironment.Servers.TryGetValue(name, out List<Process> processes))
                             {
-                                ProcessEnvironment.Servers[name] = Math.Max(0, existCount - 1);
+                                processes.Remove(process);
                             }
                         }
                     });
@@ -138,13 +137,13 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
         /// <summary>
         /// 启动服务
         /// </summary>
-        public static bool ValidateStartUpServer(string name)
+        public static bool ValidateStartUpServer(string name,int count)
         {
             //当前已是服务进程，不能启动子进程
             if (ProcessEnvironment.IsServer) return false;
 
             //服务已存在，无需重启
-            if (ProcessEnvironment.Servers.TryGetValue(name, out int count) && count > 0)
+            if (ProcessEnvironment.Servers.TryGetValue(name, out List<Process> processes) && processes.Count(q => !q.HasExited) >= count)
             {
                 return false;
             }
@@ -174,6 +173,10 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
         /// </summary>
         public bool IsDebug { get; set; }
 
+        /// <summary>
+        /// 服务前缀
+        /// </summary>
+        public Guid ServerPrefix { get; }
 
         /// <summary>
         /// 编码

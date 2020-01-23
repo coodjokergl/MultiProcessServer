@@ -11,63 +11,75 @@ namespace Joker.MultiProc.Demo
 
         static ProcessService<ICalculator> Calc = new ProcessService<ICalculator>();
 
+        static object _lockObj = new object();
         static void Main(string[] args)
         {
-            //var result = Calc.Instance.Get();
-            //Console.WriteLine(result);
+            try
+            {
+                SyncTest();//同步测试服务
+                //AsyncTest();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            Console.ReadKey();
+        }
 
-            //try
-            //{
-            //    Calc.Instance.Task();
-            //}
-            //catch (Exception exception)
-            //{
-            //    Console.WriteLine(exception);
-            //}
-            int total = 20;
+        /// <summary>
+        /// 同步测试
+        /// </summary>
+        static void SyncTest()
+        {
+            int total = 200000;
+            for (int i = 0; i < total; i++)
+            {
+                CalcImpl();
+            }
+            Console.WriteLine("调用已结束！");
+        }
+
+        /// <summary>
+        /// 异步测试
+        /// </summary>
+        static void AsyncTest()
+        {
+            int total = 200000;
             for (int i = 0; i < total; i++)
             {
                 CalcTask();
             }
-
-            while (true)
-            {
-                lock (_info)
-                {
-                    if (_info.Count > total - 5) break;
-
-                    Console.WriteLine($@"{_info.Count} 完成！");
-                }
-               
-                Thread.Sleep(1000);
-            }
         }
 
-        private static Random Rander = new Random();
-        static List<string> _info = new List<string>();
+        private static readonly Random Rander = new Random();
+        public static readonly List<string> _info = new List<string>();
         static async void CalcTask()
         {
-            await Task.Run(() =>
+            await Task.Run(CalcImpl);
+        }
+
+        static void CalcImpl()
+        {
+
+            try
             {
-                try
-                {
-                    var a = Rander.Next(1, 100);
-                    var b = Rander.Next(1, 100);
+                var a = Rander.Next(1, 100);
+                var b = Rander.Next(1, 100);
 
-                    var result = Calc.Instance.Sum(a, b);
-                    var msg = $@"{a}+{b} = {result}";
+                var result = Calc.Instance.Sum(a, b);
+                var msg = $@"{a}+{b} = {result}";
+
+                lock (_lockObj)
+                {
+                    _info.Add(msg);
+                    Console.WriteLine($@"第{_info.Count}次计算：");
                     Console.WriteLine(msg);
-
-                    lock (_info)
-                    {
-                        _info.Add(msg);
-                    }
                 }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception);
-                }
-            });
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

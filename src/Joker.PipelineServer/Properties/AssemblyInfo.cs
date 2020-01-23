@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("DataUpgrade.PipelineServer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Joker.MultiProc.PipelineServer")]
+[assembly: AssemblyDescription("Joker.MultiProc.PipelineServer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DataUpgrade.PipelineServer")]
+[assembly: AssemblyProduct("Joker.MultiProc.PipelineServer")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -34,4 +34,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "MultiProcLog4net.config", Watch = true)]

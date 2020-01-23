@@ -4,6 +4,7 @@ using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 using Joker.MultiProc.PipelineServer.Pipeline.Stream;
+using Joker.MultiProc.PipelineServer.ServerLog;
 
 namespace Joker.MultiProc.PipelineServer.Pipeline
 {
@@ -101,6 +102,18 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
         {
             Writer = new WriterStream(PipeStreamInstance);
             Reader = new ReaderStream(PipeStreamInstance);
+
+            try
+            {
+                //开启空闲的服务
+                NextPipeServerAsync();
+            }
+            catch (Exception exception)
+            {
+                Debugger.Log(2, "服务管道", $@"开启空闲服务：{this}服务异常。{exception}");
+
+                Logger.Log.Fatal($@"开启空闲服务：{this}服务异常。", exception);
+            }
         }
 
         public virtual void Dispose()
@@ -135,6 +148,7 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
             if (!IsReady)
             {
                 Debugger.Log(1, "发送信息", $@"管道未就绪！");
+                Logger.Log.Warn($"{this}管道未就绪！");
                 return false;
             }
 
@@ -164,6 +178,7 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
             if (!IsReady)
             {
                 Debugger.Log(1, "读取信息", @"管道未就绪！");
+                Logger.Log.Warn($"{this}读取信失败，管道未就绪！");
                 return null;
             }
 
@@ -171,7 +186,7 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
             {
                 //读取信息 阻塞
                 var readData = Reader.ReadInfo<CmdParam>();
-                if(readData == null) return null;
+                if (readData == null) return null;
 
                 if (readData.ErrorException != null)
                 {
@@ -194,6 +209,12 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
         protected virtual void Close()
         {
             _serverAutoRun.Set();
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $@"{ServerName}({Id})";
         }
     }
 }

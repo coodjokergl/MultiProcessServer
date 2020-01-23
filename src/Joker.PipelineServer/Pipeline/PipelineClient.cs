@@ -4,6 +4,7 @@ using System.IO.Pipes;
 using System.Security.Principal;
 using System.Threading;
 using Joker.MultiProc.PipelineServer.ProcessService;
+using Joker.MultiProc.PipelineServer.ServerLog;
 
 namespace Joker.MultiProc.PipelineServer.Pipeline
 {
@@ -55,11 +56,13 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
             }
             catch (TimeoutException)
             {
-                Debugger.Log(2,"客户端管道",$@"客户端：{ServerName}({Id})服务链接超时");
+                Debugger.Log(2,"客户端管道",$@"客户端：{this}服务链接超时");
+                Logger.Log.Fatal($"客户端：{this}服务链接超时！");
             }
             finally
             {
-                Debugger.Log(1,"客户端管道",$"客户端：{ServerName}({Id})管道即将关闭");
+                Debugger.Log(1,"客户端管道",$"客户端：{this}管道即将关闭");
+                Logger.Log.Info("客户端：{this}管道即将关闭!");
                 Dispose();
             }
         }
@@ -113,7 +116,7 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
                     if (!gotEvent.WaitOne(timeOut))
                     {
                         thread.Abort();
-                        throw new TimeoutException($"客户端：{ServerName}({Id})。请求：{cmd}发生超时！");
+                        throw new TimeoutException($"客户端：{this}请求：{cmd}发生超时！");
                     }
                 }
             });

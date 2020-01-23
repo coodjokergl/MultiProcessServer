@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Joker.MultiProc.PipelineServer.ServerLog;
 
 namespace Joker.MultiProc.PipelineServer.Pipeline
 {
@@ -55,15 +56,21 @@ namespace Joker.MultiProc.PipelineServer.Pipeline
             lock (ServerPool)
             {
                 Debugger.Log(1,"管道池",$"开始尝试释放,管道{id}");
+                Logger.Log.Info($@"开始尝试释放,管道{id}");
                 if (ServerPool.TryRemove(id, out PipelineBase pipe))
                 {
                     Debugger.Log(1,"管道池",$"管道{id},已经关闭,并完成资源释放！");
+                    Logger.Log.Info($@"管道{id},已经关闭,并完成资源释放！");
                     if (ServerPool.IsEmpty)
                     {
                         pipe.NextPipeServerAsync(); //开启一个新的空闲服务管道，保持服务可用
                     }
-                } else
-                    Debugger.Log(1,"服务池",$"未找到ID为{id}的管道服务！");
+                }
+                else
+                {
+                    Debugger.Log(1,"服务池",$"未找到ID为{id}的管道服务，释放无效！");
+                    Logger.Log.Info($@"未找到ID为{id}的管道服务，释放无效！");
+                }
             }
         }
 

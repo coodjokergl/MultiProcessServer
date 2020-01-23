@@ -119,7 +119,7 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
         }
 
         /// <inheritdoc />
-        public string ServiceName => this._processAttribute?.ServiceName;
+        public string ServiceName => ProcessEnvironment.FormatServerName(this._processAttribute?.ServiceName);
 
         /// <inheritdoc />
         public int ServiceCount => this._processAttribute.ServiceCount;
