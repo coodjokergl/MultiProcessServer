@@ -8,7 +8,7 @@ namespace Joker.MultiProc.PipelineServer.ServerLog
     /// <summary>
     /// Json格式日志布局
     /// </summary>
-    public class JsonLayout : PatternLayout
+    public class JsonLayout : log4net.Layout.LayoutSkeleton
     {
         /// <summary>
         /// 

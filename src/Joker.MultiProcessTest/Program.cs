@@ -17,7 +17,7 @@ namespace Joker.MultiProc.Demo
             try
             {
                 SyncTest();//同步测试服务
-                //AsyncTest();
+                AsyncTest();//异步测试
             }
             catch (Exception exception)
             {
