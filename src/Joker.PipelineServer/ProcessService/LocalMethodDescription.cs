@@ -94,7 +94,6 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
                     objectList.Add(sourceObject);
                 } else
                 {
-                    // RemoteService接口定义类型（source）-》PubService接口类型else
                     // 需要类型转换时，执行快速类型转换
                     objectList.Add(this.FastConvertType(targetParameterInfo.ParameterType, sourceObject));
                 }
@@ -109,7 +108,6 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
             }
 
             // 返回类型转换
-            // PubService返回类型=》RemoteService返回类型
             if (this.NeedConvert(returnObject.GetType(), this._sourceMethodInfo.ReturnType))
             {
                 returnObject = this.FastConvertType(this._sourceMethodInfo.ReturnType, returnObject);

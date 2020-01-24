@@ -32,21 +32,21 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
             this._cache[type] = this.CreateServiceDescription(type);
         }
 
-        public ProcessServiceDescription GetRemoveServiceDescription(Type type)
+        public ProcessServiceDescription GetProcessServiceDescription(Type type)
         {
             if (this._cache.TryGetValue(type, out var serviceDescription))
                 return serviceDescription;
-            throw new InvalidOperationException("RemoteService必须先注册，才能使用！");
+            throw new InvalidOperationException("ProcessService必须先注册，才能使用！");
         }
 
-        public ProcessServiceDescription GetRemoveServiceDescription(string typeFullName)
+        public ProcessServiceDescription GetProcessServiceDescription(string typeFullName)
         {
-            foreach (var remoteServiceDescription in _cache)
+            foreach (var processServiceDescription in _cache)
             {
-                if (remoteServiceDescription.Key.FullName != typeFullName) continue;
-                return remoteServiceDescription.Value;
+                if (processServiceDescription.Key.FullName != typeFullName) continue;
+                return processServiceDescription.Value;
             }
-            throw new InvalidOperationException("RemoteService必须先注册，才能使用！");
+            throw new InvalidOperationException("ProcessService必须先注册，才能使用！");
         }
 
         private ProcessServiceDescription CreateServiceDescription(Type type)

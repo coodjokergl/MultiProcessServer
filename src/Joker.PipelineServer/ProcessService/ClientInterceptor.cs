@@ -15,7 +15,7 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
             RegisterProcessService.Register();
 
             //代理所有服务，转发到服务中
-            IMethodDescription methodDescription = ProcessServiceContainer.Instance.GetRemoveServiceDescription(invocation.Method.DeclaringType).Get(invocation.Method);
+            IMethodDescription methodDescription = ProcessServiceContainer.Instance.GetProcessServiceDescription(invocation.Method.DeclaringType).Get(invocation.Method);
 
             //初始化服务，如果子进程未启动，则启动服务
             Init(methodDescription);

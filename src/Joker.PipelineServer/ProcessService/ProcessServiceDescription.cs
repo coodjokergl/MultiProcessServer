@@ -59,7 +59,7 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
                 return lazy.Value;
             } else
             {
-                throw new InvalidProgramException($@"RemoteService初始化失败，无法找到方法缓存{Environment.NewLine}{string.Join(Environment.NewLine, new[]
+                throw new InvalidProgramException($@"ProcessService初始化失败，无法找到方法缓存{Environment.NewLine}{string.Join(Environment.NewLine, new[]
                 {
                     $@"类型名：{methodInfo.DeclaringType?.FullName}",
                     $@"方法名：{methodInfo.Name}"
@@ -80,7 +80,7 @@ namespace Joker.MultiProc.PipelineServer.ProcessService
                 return method.Value.Value;
             }
             
-            throw new InvalidProgramException($@"RemoteService初始化失败，无法找到方法缓存{Environment.NewLine}{string.Join(Environment.NewLine, new[]
+            throw new InvalidProgramException($@"ProcessService初始化失败，无法找到方法缓存{Environment.NewLine}{string.Join(Environment.NewLine, new[]
             {
                 $@"类型名：{Type.DeclaringType?.FullName}",
                 $@"方法名：{methodInfo}"
