@@ -7,7 +7,7 @@ namespace Joker.MultiProc.Demo
     /// <summary>
     /// 
     /// </summary>
-    public class Calculator:ICalculator,IProcessService
+    internal class Calculator:ICalculator,IProcessService
     {
         /// <inheritdoc cref="Sum"/>
         public virtual int Sum(int a, int b)

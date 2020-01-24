@@ -36,3 +36,4 @@ using Joker.MultiProc.PipelineServer.ProcessService;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly:ProcessPluginServer]
+[assembly:InternalsVisibleTo( Joker.MultiProc.PipelineServer.InternalsVisible.ToLocalMethodDescription)]

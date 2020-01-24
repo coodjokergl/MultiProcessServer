@@ -12,10 +12,7 @@
     <icon>icon\process.png</icon>
     <description>$description$</description>
     <releaseNotes>
-      1.多进程组件功能服务化
-      2.子进程超时未有激活服务自动终止
-      3.补充日志模块
-      4.多进程调试支持
+      1.修复InternalsVisible的内部类可见性BUG
     </releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>管道 服务 多进程 进程调度 代理 Pipeline Multiply Process Joker codejokergl</tags>
