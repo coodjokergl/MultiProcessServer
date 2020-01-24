@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Joker.MultiProc.PipelineServer;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Joker.MultiProc.PipelineServer")]
-[assembly: AssemblyDescription("Joker.MultiProc.PipelineServer")]
+[assembly: AssemblyDescription("基于管线通讯的多进程组件")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("codejokergl")]
 [assembly: AssemblyProduct("Joker.MultiProc.PipelineServer")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
@@ -34,5 +35,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: InternalsVisibleTo(Castle.Core.Internal.InternalsVisible.ToDynamicProxyGenAssembly2)]
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "MultiProcLog4net.config", Watch = true)]
