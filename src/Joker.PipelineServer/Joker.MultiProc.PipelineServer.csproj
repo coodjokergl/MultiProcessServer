@@ -101,6 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Joker.MultiProc.PipelineServer.nuspec" />
+    <None Include="jokersign.publickey" />
     <None Include="jokersign.snk" />
     <None Include="MultiProcLog4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

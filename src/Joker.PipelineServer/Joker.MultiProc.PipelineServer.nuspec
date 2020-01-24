@@ -9,10 +9,21 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/coodjokergl/MultiProcessServer</projectUrl>
-    <iconUrl>http://icon_url_here_or_delete_this_line/</iconUrl>
+    <icon>icon\process.png</icon>
     <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>
+      1.多进程组件功能服务化
+      2.子进程超时未有激活服务自动终止
+      3.补充日志模块
+      4.多进程调试支持
+    </releaseNotes>
     <copyright>Copyright 2020</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>管道 服务 多进程 进程调度 代理 Pipeline Multiply Process Joker codejokergl</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+    </dependencies>
   </metadata>
+  <files>
+    <file src="..\..\Resource\Icon\process.png" target="icon\" />
+  </files>
 </package>
